@@ -1,0 +1,83 @@
+ <?php
+
+            if( isset( $_POST['submit'] ) ){
+                  
+                  // Form data Get
+                   $fname = $_POST[ 'fname' ];
+                   $uname = $_POST[ 'uname' ];
+                   $email = $_POST[ 'email' ];
+                   $pass = $_POST[ 'pass' ];
+                   $cell = $_POST[ 'cell' ];
+
+                   //Profile Picture Get
+                   $propic = $_FILES[ 'propic' ];
+
+                   $picture_name = $propic['name']; 
+                   
+                   $tmp_name = $propic['tmp_name'];
+
+
+                     $picture_extension_array = explode('.',$picture_name); 
+                     $picture_extension = end($picture_extension_array);                    
+                     $picture_uniqueName = md5( time().rand()).".".strtolower($picture_extension);
+                  
+
+            }
+            ?>
+
+             <div class="login registratin">
+		  <div class="card">
+			  <div class="card-body">
+				  <h2>Login Now</h2>
+				  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST" enctype="multipart/form-data">
+
+                          <div class="form-group">
+						  <label for="">Full Name</label>
+						  <input name="fname" class=" form-control" type="text">
+					  </div>
+
+                          <div class="form-group">
+						  <label for="">Username</label>
+						  <input name="uname" class=" form-control" type="text">
+                        </div>
+
+                        <div class="form-group">
+						  <label for="">E-mail</label>
+						  <input name="email" class=" form-control" type="text">
+                        </div>
+                        <div class="form-group">
+						  <label for="">Password</label>
+						  <input name="pass" class=" form-control" type="password">
+					  </div>
+
+                                
+					  <div class="form-group">
+						  <label for="">Cell</label>
+						  <input name="cell" class=" form-control" type="text">
+					  </div>
+
+					  
+                                
+                                <div class="form-group">
+						  <label for="">Profile Picture</label>
+						  <input name="propic" class="" type="file">
+                                </div>
+                                
+
+					  <div class="form-group">
+						 
+						  <input name="submit" class=" btn btn-info btn-block" type="submit" value="Registration">
+                                </div>
+                                
+                                
+				  </form>
+
+			  </div>
+
+			  <div class="card-footer">
+					<a class=" card-link" href="index.php">Login Now</a>
+			  </div>
+
+		  </div>
+	  </div>
+	
