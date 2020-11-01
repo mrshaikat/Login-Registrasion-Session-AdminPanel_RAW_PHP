@@ -1,3 +1,18 @@
+<?php
+
+      require_once "libs/config.php";
+      require_once "libs/function.php";
+
+      if( !isset( $_SESSION['fname']) || !isset( $_SESSION['uname']) || !isset( $_SESSION['email']) ){
+
+
+        header("location:index.php");
+      }
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en"
       dir="ltr">
@@ -130,9 +145,9 @@
                                        data-toggle="dropdown"
                                        data-caret="false">
                                         <span class="mr-1 d-flex-inline">
-                                            <span class="text-light">Adrian D.</span>
+                                            <span class="text-light"><?php echo $_SESSION['uname']; ?></span>
                                         </span>
-                                        <img src="assets/images/avatar/demi.png"
+                                        <img src="photos/<?php echo $_SESSION['pic']; ?>"
                                              class="rounded-circle"
                                              width="32"
                                              alt="Frontted">
@@ -140,8 +155,8 @@
                                     <div id="account_menu"
                                          class="dropdown-menu dropdown-menu-right">
                                         <div class="dropdown-item-text dropdown-item-text--lh">
-                                            <div><strong>Adrian Demian</strong></div>
-                                            <div class="text-muted">@adriandemian</div>
+                                            <div><strong><?php echo $_SESSION['uname']; ?></strong></div>
+                                            <div class="text-muted"><?php echo $_SESSION['email']; ?></div>
                                         </div>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item active"
@@ -152,7 +167,7 @@
                                            href="edit-account.html"><i class="material-icons">edit</i> Edit account</a>
                                         <div class="dropdown-divider"></div>
                                         <a class="dropdown-item"
-                                           href="login.html"><i class="material-icons">exit_to_app</i> Logout</a>
+                                           href="inc/logout.php"><i class="material-icons">exit_to_app</i> Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -188,6 +203,16 @@
 
 
 
+                        <div class="user-profile">
+                        
+                            <img src="photos/<?php echo $_SESSION['pic']; ?>" alt="">
+                            <h1><?php echo $_SESSION['fname']; ?></h1>
+                            <h3> <?php echo $_SESSION['uname']; ?> </h3>
+                            <h3><?php echo $_SESSION['email']; ?></h3>
+                            <h3><?php echo $_SESSION['cell']; ?></h3>
+
+                        
+                        </div>
 
 
 
@@ -269,12 +294,12 @@
                                     <a href="profile.html"
                                        class="flex d-flex align-items-center text-underline-0 text-body">
                                         <span class="avatar avatar-sm mr-2">
-                                            <img src="assets/images/avatar/demi.png"
+                                            <img src="photos/<?php echo $_SESSION['pic']; ?>"
                                                  alt="avatar"
                                                  class="avatar-img rounded-circle">
                                         </span>
                                         <span class="flex d-flex flex-column">
-                                            <strong>Adrian Demian</strong>
+                                            <strong><?php echo $_SESSION['uname']; ?></strong>
                                             <small class="text-muted text-uppercase">Site Manager</small>
                                         </span>
                                     </a>
@@ -290,14 +315,14 @@
                                             </div>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item active"
-                                               href="index.html">Dashboard</a>
+                                               href="index.php">Dashboard</a>
                                             <a class="dropdown-item"
                                                href="profile.html">My profile</a>
                                             <a class="dropdown-item"
                                                href="edit-account.html">Edit account</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item"
-                                               href="login.html">Logout</a>
+                                               href="inc/logout.php">Logout</a>
                                         </div>
                                     </div>
 								</div>

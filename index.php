@@ -1,3 +1,21 @@
+<?php
+
+      require_once "libs/config.php";
+      require_once "libs/function.php";
+
+      if( isset( $_SESSION['fname']) || isset( $_SESSION['uname']) || isset( $_SESSION['email']) ){
+
+
+            header("location:dashboard.php");
+          }
+          
+      
+
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en"
       dir="ltr">
@@ -44,6 +62,8 @@
               href="assets/css/vendor-fontawesome-free.rtl.css"
               rel="stylesheet">
 
+           
+
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async
                 src="https://www.googletagmanager.com/gtag/js?id=UA-133433427-1"></script>
@@ -78,26 +98,100 @@
 
     </head>
 
-    <body class="layout-default">
+
+
+    <body class="">
+
+
+            <?php
+    
+    
+                  if( isset( $_POST['submit'])  ){
+
+                        $unser_mail = $_POST['user_mail'];
+                        $pass = $_POST['pass'];
+
+                        if( empty($unser_mail) || empty($pass ) ){
+
+                              $message = "<p class='alert alert-danger text-center'>Fild Must Not Be Empty!! <button class='close' data-dismiss='alert'>&times;</button> </p>";
+
+                        }else{
+
+                              $sql = "SELECT * FROM user_info where email='$unser_mail' OR  uname='$unser_mail' ";
+                              $data = $connection -> query($sql);
+
+                              $number = $data -> num_rows ;
+
+                              if( $number == 1 ){
+                                    
+                                          $user_login_data = $data -> fetch_assoc();
+
+                                          if( password_verify( $pass , $user_login_data['pass'] ) == false ){
+
+                                                $message = "<p class='alert alert-danger text-center'> Incorrect Password!! <button class='close' data-dismiss='alert'>&times;</button> </p>";
+
+                                          }else{
+
+                                                
+                                                $_SESSION['pic'] = $user_login_data['photo'];
+                                                $_SESSION['fname'] = $user_login_data['fname'];
+                                                $_SESSION['uname'] = $user_login_data['uname'];
+                                                $_SESSION['email'] = $user_login_data['email'];
+                                                $_SESSION['cell'] = $user_login_data['cell'];
+                                               
+                                                header("location:dashboard.php");
+
+                                          }
+
+
+
+                              }else{
+
+                                    $message = "<p class='alert alert-danger text-center'> Wrong Username Or E-mail!! <button class='close' data-dismiss='alert'>&times;</button> </p>";
+
+                              }
+
+
+
+                        }
+
+                  }
+
+
+
+            ?>
+ 
+                  <div class="message logmess">
+                       <?php
+
+                        if( isset($message) ){
+
+                              echo $message;
+                        }
+                       
+                       ?>
+                 </div>
+
+
 
 	  <div class="login">
 		  <div class="card">
 			  <div class="card-body">
 				  <h2>Login Now</h2>
-				  <form action="">
+				  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
 					  <div class="form-group">
 						  <label for="">Username / E-mail</label>
-						  <input class=" form-control" type="text">
+						  <input name="user_mail" class=" form-control" type="text">
 					  </div>
 
 					  <div class="form-group">
 						  <label for="">Password</label>
-						  <input class=" form-control" type="password">
+						  <input name="pass" class=" form-control" type="password">
 					  </div>
 
 					  <div class="form-group">
 						 
-						  <input class=" btn btn-info btn-block" type="text" value="Login">
+						  <input name="submit" class=" btn btn-info btn-block" type="submit" value="Login">
 					  </div>
 				  </form>
 
